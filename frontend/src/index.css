@@ -1,0 +1,30 @@
+
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+/*
+.placeholder{
+  font-size: 12px;
+  font-style: italic;
+}
+.nav{
+  width: 100vw;
+  min-height: 100vh;
+  background: #ced8ff;
+  transition: 0.5s;
+}
+ 
+.nav.dark{
+  background: #222;
+}
+
+
+*/
+
+
+
+
+
+
+
+
