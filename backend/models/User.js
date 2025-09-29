@@ -5,16 +5,16 @@ const UserSchema = new Schema( {
      
     name: {
         type: String,
-        require: true,
+        required: true,
     },
     email: {
         type: String,
-        require: true,
+        required: true,
         unique: true,
     },
     password: {
         type: String,
-        require: true,
+        required: true,
     },
     role: {
          type: String, 
@@ -25,7 +25,12 @@ const UserSchema = new Schema( {
         type: Number,
          default: 0
     },
-   
+     isActive: { 
+        type: Boolean,
+         default: true
+    },
+    lastLogin: { type: Date },  
+   createdAt: { type: Date, default: Date.now },
 });
 
 const UserModel = mongoose.model('users', UserSchema);

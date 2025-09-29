@@ -8,7 +8,7 @@ const Upload = require('../models/Upload'); // <-- ADD THIS LINE
 
 router.post('/upload-excel', upload.single('excelFile'), uploadExcel);
 
-router.get('/uploads/:id', async (req, res) => {
+router.get('/:id', async (req, res) => {
   try {
     const file = await Upload.findById(req.params.id);
     if (!file) return res.status(404).json({ message: 'File not found.' });

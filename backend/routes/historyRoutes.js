@@ -84,17 +84,17 @@ const uploadSchema = new mongoose.Schema({
 const Upload = mongoose.models.Upload || mongoose.model('Upload', uploadSchema);
 
 // GET recent uploads
-router.get('/uploads', async (req, res) => {
+const GetFiles = router.get('/allfile', async (req, res) => {
   try {
     const uploads = await Upload.find().sort({ createdAt: -1 }).limit(50);
     res.json(uploads);
-  } catch (e) {
+  } catch (error) {
     res.status(500).json({ message: "Failed to fetch history" });
   }
 });
 
 // POST new upload info (if you do it in two steps from frontend)
-router.post('/uploads', async (req, res) => {
+const Uploadfile = router.post('/uploads', async (req, res) => {
   const { originalname, cloudinaryUrl, public_id } = req.body;
   if (!originalname) {
     return res.status(400).json({ message: "Missing originalname" });
@@ -103,13 +103,13 @@ router.post('/uploads', async (req, res) => {
     const upload = new Upload({ originalname, cloudinaryUrl, public_id });
     await upload.save();
     res.status(201).json(upload);
-  } catch (e) {
+  } catch (error) {
     res.status(500).json({ message: "Failed to save file to history" });
   }
 });
 
 // DELETE by ID (removes from Cloudinary + MongoDB)
-router.delete('/uploads', async (req, res) => {
+const DeleteFile = router.delete('/delete/:id', async (req, res) => {
   try {
     const upload = await Upload.findById(req.params.id);
     if (!upload) {
@@ -130,5 +130,8 @@ router.delete('/uploads', async (req, res) => {
   }
 });
 
-module.exports = router;
-
+module.exports ={
+  DeleteFile,
+  Uploadfile,
+  GetFiles
+};

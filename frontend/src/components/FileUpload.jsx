@@ -1,4 +1,5 @@
 import React from 'react';
+import { toast } from 'react-toastify';
 import * as XLSX from 'xlsx';
 
 const allowedExtensions = ['xlsx', 'xls'];
@@ -6,7 +7,8 @@ const allowedExtensions = ['xlsx', 'xls'];
 const FileUpload = ({ onDataParsed, onError }) => {
   const handleFile = async (e) => {
     const file = e.target.files[0];
-    if (!file) return onError('No file selected.');
+    if (!file) return 
+        onError('No file selected.');
 
     const ext = file.name.split('.').pop().toLowerCase();
     if (!allowedExtensions.includes(ext)) return onError('Please upload only .xlsx or .xls files.');
@@ -22,12 +24,12 @@ const FileUpload = ({ onDataParsed, onError }) => {
         const jsonData = XLSX.utils.sheet_to_json(ws, { defval: '' });
 
         if (jsonData.length === 0) {
-          onError('The Excel sheet is empty.');
+          toast.error('The Excel sheet is empty.');
           return;
         }
         onDataParsed(jsonData);
       } catch {
-        onError('Error parsing Excel file.');
+        toast.error('Error parsing Excel file.');
       }
     };
     reader.readAsBinaryString(file);
@@ -43,9 +45,9 @@ const FileUpload = ({ onDataParsed, onError }) => {
       });
 
       const data = await response.json();
-
+     toast.success('File upload successfully!');
       if (!response.ok) {
-        onError(data.message || "File upload failed!");
+        toast.error(data.message || "File upload failed!");
         return;
       }
 
@@ -53,7 +55,7 @@ const FileUpload = ({ onDataParsed, onError }) => {
       // You may want to provide onUploadSuccess callback in parent
 
     } catch (err) {
-      onError("Network error or upload failed: " + err.message);
+      toast.error("Network error or upload failed: " + err.message);
     }
   };
 
@@ -67,3 +69,4 @@ const FileUpload = ({ onDataParsed, onError }) => {
 
 
 export default FileUpload;
+

@@ -12,8 +12,9 @@ import ChartHistory from './components/ChartHistory';
 //import AnalyzeData from './pages/AnalyzeData';
 import RefrshHandler from './RefrshHandler';
 import AdminLogin from './pages/AdminLogin';
-import AdminDashboard from './pages/AdminDashboard';
-
+import AdminDashboard from './pages/Admin/AdminDashboard';
+import LandingPage from './pages/LandingPage';
+import Settings from './pages/Settings';
 function App() {
   const [count, setCount] = useState(0)
     const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -28,7 +29,7 @@ function App() {
       <RefrshHandler setIsAuthenticated={setIsAuthenticated} />
    
    <Routes>
-    
+    <Route path='/' element={<LandingPage />} />
    <Route path='/' element={<Navigate to="/Login" />} />
    <Route path="/data-table" element={<DataTable />} />
     <Route path="/history" element={<ChartHistory />} />
@@ -37,6 +38,8 @@ function App() {
     <Route path='/login' element={<Login/>} />
     <Route path='/signup' element={<Signup/>} />
    <Route path='/home' element={<PrivateRoute element={<Home/>}/> } />
+   <Route path="/settings" element={<Settings />} />
+   <Route path='/admin' element={<PrivateRoute element={<AdminDashboard />} />} />
    
 
  

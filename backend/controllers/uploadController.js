@@ -4,6 +4,7 @@ const cloudinary = require('../utils/cloudinary');
 const Upload = require('../models/Upload');
 const fs = require('fs');
 
+
 exports.uploadExcel = async (req, res) => {
   try {
     if (!req.file) {
@@ -23,7 +24,8 @@ exports.uploadExcel = async (req, res) => {
       mimetype: req.file.mimetype,
       size: req.file.size,
       cloudinaryUrl: result.secure_url,
-      public_id: result.public_id
+      public_id: result.public_id,
+         userId: req.userId,
     });
 
     return res.status(200).json({

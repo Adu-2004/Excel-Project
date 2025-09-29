@@ -58,7 +58,7 @@ function Navbar() {
         localStorage.removeItem('loggedInUser');
         handleSuccess('User Logout');
         setTimeout(() => {
-            navigate('/login');
+            navigate('/');
         }, 1000)
     }
 

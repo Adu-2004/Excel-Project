@@ -1,9 +1,10 @@
 import React from 'react'
+import Navbar from '../components/Navbar'
 
 function AdminDashboard() {
   return (
     <div>
-      Hi this is Admin
+     Hi THis is Admin
     </div>
   )
 }

@@ -1,17 +1,37 @@
-/*const UserModel = require("../models/User.js");
+const Upload = require("../models/Upload.js");
+const User = require("../models/User.js");
 
-const getAllUsers = async (req, res) => {
-   try{
-        const users = await UserModel.find({}, {password:0});
-        console.log(users)
-        if(!users || users.length === 0) {
-          return res.status(404).json({message:"NO Users Found"});
-        }
-        return res.status(200).json(users);
-   }catch(error) {
-    next(error);
-   }
+// GET all uploads (admin only)
+const getAllUploads = async (req, res) => {
+  try {
+    const uploads = await Upload.find().populate("userId", "name email");
+    res.json(uploads);
+  } catch (e) {
+    res.status(500).json({ message: "Failed to fetch all uploads" });
+  }
 };
 
+// GET all users (admin only)
+const getAllUsers = async (req, res) => {
+  try {
+    const users = await User.find();
+    res.json(users);
+  } catch (e) {
+    res.status(500).json({ message: "Failed to fetch users" });
+  }
+};
 
-module.exports = getAllUsers; */
+// DELETE user (admin only)
+const deleteUser = async (req, res) => {
+  try {
+    await User.findByIdAndDelete(req.params.id);
+    res.json({ message: "User deleted" });
+  } catch (err) {
+    res.status(500).json({ message: "Delete error", error: err.message });
+  }
+};
+module.exports = {
+  deleteUser,
+  getAllUploads,
+  getAllUsers
+}
